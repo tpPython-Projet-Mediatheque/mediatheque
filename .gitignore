@@ -1,0 +1,18 @@
+# Environnement virtuel
+venv/
+
+# Base de données SQLite
+*.db
+data/
+
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+*.pyo
+
+# Exports
+exports/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
