@@ -1,7 +1,7 @@
 #Fichier principak de test des classes POO
 #Auteurs: ASSOGBA Leonie & FOTOHOUN Samuel
 
-from livre import livre
+from livre import Livre
 from vinyle import Vinyle
 from jeu_video import JeuVideo
 from emprunteur import Emprunteur

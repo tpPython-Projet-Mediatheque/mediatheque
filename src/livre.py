@@ -1,11 +1,11 @@
 from media import Media
 class Livre(Media):
     """Classe representant un livre de la mediatheque"""
-    def __init__(self,id,titre,genre, annnee,auteur,isbn):
+    def __init__(self,id,titre,genre, annee,auteur,isbn):
         """Initialiser un livre avec ses attributs specifiques."""
         super().__init__(id,titre,genre,annee)
         self.auteur=auteur
-        self.isbon
+        self.isbn = isbn
     def afficher_details(self):
         """Afficher les detail du livre"""
         statut= "Disponible" if self.disponible else "Emprunte"
