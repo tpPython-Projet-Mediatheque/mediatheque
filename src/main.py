@@ -7,7 +7,7 @@ from jeu_video import JeuVideo
 from emprunteur import Emprunteur
 from mediatheque import Mediatheque
 from emprunt import Emprunt
-from dateline import date
+from datetime import date
 
 
 #Creation de la mediatheque
@@ -21,11 +21,11 @@ jeu1 = JeuVideo(3, "FIFA 24", "Sport", 2023, "PS5", 4)
 #Ajout au catalogue
 ma_mediatheque.ajouter_media(livre1)
 ma_mediatheque.ajouter_media(vinyle1)
-ma_meditheque.ajouter_media(jeu1)
+ma_mediatheque.ajouter_media(jeu1)
 
 #Details d'un media
 
-print("\n== Details ===")
+print("\n=== Details ===")
 livre1.afficher_details()
 
 #Creation d'un emprunteur

@@ -2,18 +2,18 @@
 #Auteurs: ASSOGBA Leonie & FOTOHOUN Samuel
 
 class Mediatheque:
-"""Classe centrale gerant l'ensemble de la mediatheque."""
+    """Classe centrale gerant l'ensemble de la mediatheque."""
 
-def __init__(self, nom):
-    """Initialise la mediatheque."""
-    self.nom = nom
-    self.catalogue =[]
-    self.emprunteurs = []
-    self.emprunts = []
+    def __init__(self, nom):
+        """Initialise la mediatheque."""
+        self.nom = nom
+        self.catalogue =[]
+        self.emprunteurs = []
+        self.emprunts = []
     
     def ajouter_media(self, media):
         """Ajoute un media au catalogue."""
-        self.catalogue.apprend(media)
+        self.catalogue.append(media)
         print(f"Media '{media.titre}' ajoute avec succes.")
                 
     def supprimer_media(self, id_media):
@@ -47,7 +47,7 @@ def __init__(self, nom):
     def ajouter_emprunteur(self , emprunteur):
         """Ajouter un emprunteur"""
         self.emprunteurs.append(emprunteur)
-        print(f"Emprunteur'{self.nom}' ajoute avec succes.")
+        print(f"Emprunteur '{emprunteur.nom}' ajoute avec succes.")
         
     def __str__(self):
         """Retourne une representation lisible de la mediatheque."""

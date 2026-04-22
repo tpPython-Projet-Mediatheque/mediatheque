@@ -2,21 +2,22 @@
 #Auteurs : ASSOGBA Leonie & FOTOHOUN Samuel
 
 class Emprunteur:
-"""Classe representant un emprunteur de la mediatheque."""
+    """Classe representant un emprunteur de la mediatheque."""
 
-def __init__(self, id, nom, prenom, email):
-    """Initialise un emprunteur avec ses informations."""
-    self.id= id
-    self.prenom= prenom
-    self.email=email
-    self.emprunts_en_cours= []
-    
+    def __init__(self, id, nom, prenom, email):
+        """Initialise un emprunteur avec ses informations."""
+        self.id= id
+        self.nom=nom
+        self.prenom= prenom
+        self.email=email
+        self.emprunts_en_cours= []
+        
     def peut_emprunter(self):
         """Verifie si l'emprunteur peut encore emprunter (max 3)."""
         return len(self.emprunts_en_cours) < 3
     def ajouter_emprunt(self, emprunt):
         """Ajouter un emprunt a la liste des emprunts en cours."""
-        self.emprunts_en_cours.remove(emprunt)
+        self.emprunts_en_cours.append(emprunt)
     def retirer_emprunt(self, emprunt):
         """Retire un emprunt de la liste des emprunts en cours."""
         self.emprunts_en_cours.remove(emprunt)

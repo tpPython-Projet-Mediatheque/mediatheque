@@ -4,13 +4,13 @@
 from media import Media
 
 class Vinyle(Media):
-"""Classe representant un vinyle de la mediatheque."""
+    """Classe representant un vinyle de la mediatheque."""
 
-def __init__(self, id, titre, genre, annee,artiste, nb_pistes):
-    """Initialise un vinyle avec ses attributs specifiques."""
-    super().__init__(id, titre, genre, annee)
-    self.artiste = artiste
-    self.nb_pistes =nb_pistes
+    def __init__(self, id, titre, genre, annee,artiste, nb_pistes):
+        """Initialise un vinyle avec ses attributs specifiques."""
+        super().__init__(id, titre, genre, annee)
+        self.artiste = artiste
+        self.nb_pistes =nb_pistes
     
     def afficher_details(self):
         """Afficher les details du vinyles."""
@@ -22,6 +22,6 @@ def __init__(self, id, titre, genre, annee,artiste, nb_pistes):
         print(f" Nb pistes  : {self.nb_pistes}")
         print(f" Statut  : {statut}")
         
-        def __str__(self):
-            """Retourne une representation lisible du vinyle."""
-            return f"[VINYLE] {self.titre} - {self.artiste} ({self.annee})"
+    def __str__(self):
+        """Retourne une representation lisible du vinyle."""
+        return f"[VINYLE] {self.titre} - {self.artiste} ({self.annee})"
