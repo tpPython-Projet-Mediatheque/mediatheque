@@ -1,3 +1,4 @@
+
 from abc import ABC,abstractmethod
 class Media(ABC):
     """ Classe abstraite representant un media de la mediateque"""
@@ -25,4 +26,4 @@ class Media(ABC):
         """Retourne une representation lisible de média."""
         statut= "Disponible" if self.disponible else "Emprunte"
         return f"{self.titre}({self.genre},{self.annee}) - {statut}"
-    
+
