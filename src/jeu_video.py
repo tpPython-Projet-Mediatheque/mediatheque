@@ -1,15 +1,11 @@
-#Classe JeuVideo : herite de media
-# Auteurs :ASOGBA Leonie & FOTOHOUN Samuel
-
-
-from media import Media
+from src.media import Media
 class JeuVideo(Media):
     """Classe representant un jeu video de la mediatheque."""
     def __init__(self, id, titre, genre, annee, platforme, nb_joueurs):
         """Initialise un jeu video avec ses attributs specifiques."""
         super().__init__(id, titre, genre, annee)
-        self.platforme = platforme
-        self.nb_joueurs = nb_joueurs
+        self.platforme=platforme
+        self.nb_joueurs=nb_joueurs
 
     def afficher_details(self):
         """ Afficher les details du jeu video."""

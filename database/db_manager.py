@@ -1,7 +1,6 @@
 import sqlite3
 import os
- 
- class DBManager:
+class DBManager:
      """Classe gerant la connexion a la base de donnees SQLite."""
      
      def __init__(self):

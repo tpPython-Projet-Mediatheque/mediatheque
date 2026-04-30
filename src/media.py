@@ -10,14 +10,17 @@ class Media(ABC):
         self.annee=annee
         self.disponible=True
     def emprunter(self):
-        """Marquer le media emprunter"""
-        if self.disponible:
+        """Marquer le media comme emprunte."""
+        if not self.disponible:
+            raise ValueError(f"'{self.titre}' est deja emprunte.")
             self.disponible= False
             return True
         return False
     def retourner(self):
         """Marquer le media comme disponible."""
-        self.disponible=True
+        if self.disponible:
+            raise ValueError(f"'{self.titre}' n'est pas emprunte")
+        self.disponible= True
         
     @abstractmethod
     def afficher_details(self):
