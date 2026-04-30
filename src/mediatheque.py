@@ -23,9 +23,9 @@ class Mediatheque:
         for m in self.catalogue:
             if m.id== media.id:
                 raise ValueError("Un  media avec l'identifiant {media.id} existe deja.")
-            self.catalogue.append(media)
-            self.media_dao.ajouter_media(media)
-            print(f"Media '{media.titre}' ajoute avec succes.")
+        self.catalogue.append(media)
+        self.media_dao.ajouter_media(media)
+        print(f"Media '{media.titre}' ajoute avec succes.")
     
     def supprimer_media(self,id_media):
 
@@ -40,8 +40,8 @@ class Mediatheque:
                 self.media_dao.supprimer_media(id_media)
                 print(f"Media '{media.titre}' supprime avec succes.")
                 return True
-            print("Media Intouvable.")
-            return False
+        print("Media Intouvable.")
+        return False
     
     def modifier_media(self, id_media,titre=None, genre=None, annee=None):
 
@@ -60,48 +60,68 @@ class Mediatheque:
                 self.media_dao.modifier_media(id_media, media.titre, media.genre, media.annee)
                 print(f"Media '{media.titre}' modifie avec succes.")
                 return True
-            print("Media introuvable")
-            return False
+        print("Media introuvable")
+        return False
 
     def rechercher_par_titre(self,titre):
-        """"""
+        """Recherche des médias par titre."""
         if not isinstance(titre,str) or not titre.strip():
             raise ValueError("Le titre doit etre une chaîne de caracteres non vide.")
         resultats=[m for m in self.catalogue if titre.lower() in m.titre.lower()]
         return resultats
 
     def rechercher_par_genre(self,genre):
-        """"""
+        """Recherche des médias par genre"""
         if not isinstance(genre,str) or not genre.strip():
             raise ValueError("Le genre doit etre une chaîne de caracteres non vide.")
         resultats=[m for m in self.catalogue if genre.lower() in m.genre.lower()]
         return resultats
 
     def rechercher_par_auteur(self,auteur):
-        """"""
+        """Recherche des medias par auteur ou par artiste """
         if not isinstance(auteur,str) or not auteur.strip():
             raise ValueError("L'auteur doit etre une chaîne de caracteres non vide.")
         resultats=[]
         for m in self.catalogue:
             auteur_media=getattr(m,'auteur', None) or getattr(m,'artiste', None)
-            if auteur_media and auteur.lower() in auteur_media.lower() in auteur_media.lower():
+            if auteur_media and auteur.lower() in auteur_media.lower():
                 resultats.append(m)
         return resultats
 
     def ajouter_emprunteur(self,emprunteur):
-        """"""
-        if emprunteur in None:
+        """Ajoute un eprunteur et le sauvegarde en base de données"""
+        if emprunteur is None:
             raise ValueError("L'empruteur ne peut pas etre None.")
         for e in self.emprunteurs:
             if e.id == emprunteur.id:
                 raise ValueError(f"Un emprunteur avec l'identifiant '{emprunteur.id}'existe deja.")
-                self.emprunteurs.append(emprunteur)
-            self.emprunt_dao.ajouter_emprunteur(emprunteur)
-            print(f"Emprunteur '{emprunteur.nom}'ajoute avec succes.")
+        self.emprunteurs.append(emprunteur)
+        self.emprunt_dao.ajouter_emprunteur(emprunteur)
+        print(f"Emprunteur '{emprunteur.nom}'ajoute avec succes.")
 
-    def enregistrer_emprunt(self,emprunteur, media, duree_jour= 14):
-        """"""
-
+    def enregistrer_emprunt(self,emprunteur, media, duree_jours= 14):
+        """Enregistre un emprunt en respectant les règles de gestion."""
+        if emprunteur is None:
+            raise ValueError("L'emprunteur ne peut pas etre None")
+        if media is None:
+            raise ValueError("Le media ne peut pas etre None.")
+        if not isinstance(duree_jours, int) or duree_jours <= 0:
+            raise ValueError("La duree doit etre un entier positif.")
+        if not media.disponible:
+            print("Impossible : ce media n'est pas disponible.")
+            return None
+        if not emprunteur.peut_emprunter():
+            print("Impossible : cet emprunteur a atteint la limite de 3 emprunts.")
+            return None
+        date_retour_prevue = date.today() + timedelta(days=duree_jours)
+        id_emprunt = len(self.emprunts) + 1
+        emprunt = Emprunt(id_emprunt, media, emprunteur, date_retour_prevue)
+        media.emprunter()
+        emprunteur.ajouter_emprunt(emprunt)
+        self.emprunts.append(emprunt)
+        self.emprunt_dao.ajouter_emprunt(emprunt)
+        print(f"Emprunt enregistre : '{media.titre}' par {emprunteur.nom}.")
+        return emprunt
 
 
     def effectuer_retour(self,id_emprunt):
@@ -115,10 +135,10 @@ class Mediatheque:
                     return False
                 emprunt.effectuer_retour()
                 emprunt.media.retourner()
-        emprunt.emprunteur.retirer_emprunt(emprunt)
-        self.emprunt_dao.effectuer_retour_db(id_emprunt, emprunt.date_retour_effective)
-        print(f"Retour enregistre:'{emprunt.media.titre}'.")
-        return True
+                emprunt.emprunteur.retirer_emprunt(emprunt)
+                self.emprunt_dao.effectuer_retour_db(id_emprunt, emprunt.date_retour_effective)
+                print(f"Retour enregistre:'{emprunt.media.titre}'.")
+                return True
         print("Emprunt introuvable.")
         return False
     
@@ -139,7 +159,7 @@ class Mediatheque:
         if not self.catalogue:
             print("Le catalogue est vide.")
             return
-        print("\n=== Catalogue de {self.nom} ===")
+        print(f"\n=== Catalogue de {self.nom} ===")
         for media in self.catalogue:
             print(media)
 

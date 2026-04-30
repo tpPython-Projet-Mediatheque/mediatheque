@@ -15,7 +15,7 @@ class EmpruntDAO:
          curseur = connexion.cursor()
          curseur.execute('''
                          INSERT INTO emprunteurs (nom, prenom, email)
-                         Vlues(?,?,?)
+                         VALUES(?,?,?)
                          ''',(emprunteur.nom, emprunteur.prenom, emprunteur.email))
          connexion.commit()
          connexion.close()
@@ -55,5 +55,16 @@ class EmpruntDAO:
         emprunts = curseur.fetchall()
         connexion.close()
         return emprunts
-        
-         
+    def effectuer_retour_db(self, id_emprunt, date_retour_effective):
+        """Met à jour un emprunt comme rendu dans la base de données."""
+        connexion = self.db.get_connexion()
+        curseur = connexion.cursor()
+        curseur.execute('''
+            UPDATE emprunts
+            SET rendu = 1, date_retour_effective=?
+            WHERE id =?
+        ''', (str(date_retour_effective), id_emprunt))
+        connexion.commit()
+        connexion.close()
+        print(f"Retour de l'emprunt {id_emprunt} enregistre en base de données.")
+            
