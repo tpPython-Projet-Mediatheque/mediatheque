@@ -1,5 +1,6 @@
 import sqlite3
 import os
+
 class DBManager:
     """Classe gerant la connexion a la base de donnees SQLite."""
      
