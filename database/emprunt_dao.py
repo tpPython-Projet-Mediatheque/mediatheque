@@ -1,4 +1,4 @@
-from db_manager import DBManager
+from database.db_manager import DBManager
 
 
 class EmpruntDAO:
